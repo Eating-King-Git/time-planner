@@ -1,12 +1,43 @@
-# 时间规划师 · Time Planner
+# 时间规划师 Time Planner：四象限待办与桌面时间管理
 
-**把任务写下来，看清优先级，安排今天的时间。**
+**按重要性决定先做什么，用时间块安排何时做，通过提醒与跨日延续跟进完成。**
 
-时间规划师（Time Planner）是一款本地优先的 Windows 桌面任务管理工具，适合需要同时处理学习、研究和日常工作的个人用户。它把中文任务输入、重要/紧急四象限、当日排程、未来安排预览和桌面提醒放在一个可置顶的小窗口中，帮助你从“记录待办”走到“安排执行”。
+时间规划师是一款开源的 Windows 桌面待办清单与时间管理工具，将**艾森豪威尔矩阵（重要/紧急四象限）**、**时间块安排（Time Blocking）**和**任务完成反馈**结合起来。输入中文任务后，可查看分类依据、补充截止时间与预计时长，将符合条件的事项排入当天空闲时段，并通过置顶窗口、桌面提醒和未完成任务延续持续跟进。
 
-软件运行无需账号、不调用大模型 API，也不产生模型 Token 费用。分类和排程由本地规则完成，会展示评分依据，并允许手动调整。任务和设置保存在自己的电脑中。
+它适合同时处理课程、论文、会议、作业和个人事务的学生、研究者与个人工作者。支持今天、未来3天、未来7天和长期任务视图，让固定日程与待办工作在同一处查看。
 
-*A local-first Windows desktop task planner with an Eisenhower matrix, Chinese task input, daily scheduling, reminders, and unfinished-task carryover. No account or LLM API required.*
+**本地运行，无需账号、云同步或大模型 API。** 分类与排程采用可解释的规则，支持手动修正；任务保存在自己的电脑中。日常使用不产生模型 Token 费用。
+
+**English overview:** Time Planner is an open-source, local-first Windows desktop task manager and daily planner. It combines the **Eisenhower Matrix**, **time blocking**, and **task completion feedback** with Chinese task input, rule-based daily scheduling, desktop reminders, an always-on-top window, and automatic carryover of unfinished tasks. It supports personal productivity, study planning, and research workflows without requiring an account or an LLM API. The interface is currently in Chinese.
+
+[快速开始](#快速开始) · [管理方法](#如何把管理方法落实到日常安排) · [设计亮点](#设计亮点与实践创新) · [功能清单](#功能) · [当前限制](#当前限制)
+
+## 如何把管理方法落实到日常安排
+
+软件围绕“记录事项 → 明确要求 → 确定优先级 → 安排时间 → 确认完成”组织操作，将管理方法落实到每天可以使用的动作。
+
+| 管理思路 | 软件中的实现 | 帮助解决的问题 |
+| --- | --- | --- |
+| 四象限优先级管理 | 根据影响、截止时间等信息评分，显示理由，允许手动调整重要/紧急标记 | 事情很多，不知道先做哪件 |
+| 任务澄清 | 提示补充截止、预计时长和影响程度 | 只记下“做报告”，却没有明确执行条件 |
+| 时间块安排 | 将符合条件的待办排入当天工作时段，考虑固定日程和午休 | 清单越来越长，却没有给任务留时间 |
+| 缓冲与重点意识 | 默认采用20%的排程缓冲设置，最多标记3个关键结果 | 日程排得过满，难以判断当天重点 |
+| 计划与执行反馈 | 提醒后由用户确认状态，当天已完成任务继续可见，未完成普通任务跨日延续 | 时间到了但事情没做完，跨天后容易遗漏 |
+
+四象限比例用于指导时间分配；当前排程按优先级、时长和时间冲突安排，并不强制实现某一比例。任务澄清和执行反馈是本项目的工作流程设计，尚未提供完整的 GTD、PDCA、OKR 或项目管理系统。
+
+## 设计亮点与实践创新
+
+本项目的创新侧重于把常见管理方法组合成低操作成本的个人工作流程，具体体现在：
+
+1. **从分类直接连接到行动。** 输入时即可看到所属象限与判断依据，保存后符合条件的任务参与当天排程，让优先级判断与时间安排相互衔接。
+2. **把重要事项的时间投入放到眼前。** 四象限展示典型事项、建议比例与当天已排时长；课程和固定事件单独统计，帮助用户检查重要工作是否获得时间。
+3. **延续任务，同时保留原截止。** 未完成普通任务进入后续日期，并标注延续天数；原截止不会被自动改晚，用户仍能看到逾期压力。已过去的课程按前缀规则排除。
+4. **将确认结果纳入任务流程。** 信息不清楚时提示补充；待确认事项可以记录结果；到截止时提醒确认状态，帮助用户主动维护任务清单。
+5. **用置顶小窗降低查看成本。** 在其他软件上方查看今日任务，可切换未来安排和长期清单，并调整窗口大小与缩放。
+6. **规则可解释，本地可掌控。** 无需云端模型即可完成常见解析、分类与排程；规则开放在源码中，方便按个人工作方式继续修改。
+
+以上是产品组合和交互上的实践创新，不代表提出了新的管理理论，也没有经过对照实验验证效率提升。评分、时间比例和排程结果可作为个人决策参考。
 
 ## 适合什么场景
 
@@ -32,7 +63,7 @@
 
 ### 直接使用便携版
 
-发布的便携包可在仓库的 Releases 页面获取。完整解压 `TimePlanner-版本号-windows.zip`，双击其中的 `时间规划师.exe`。其他 DLL、资源文件和 `locales` 文件夹需要一并保留，不能只复制 EXE。
+如[Releases 页面](https://github.com/Eating-King-Git/time-planner/releases)提供便携包，完整解压 `TimePlanner-版本号-windows.zip`，双击其中的 `时间规划师.exe`。如果尚无可下载附件，请按下节从源码运行。其他 DLL、资源文件和 `locales` 文件夹需要一并保留，不能只复制 EXE。
 
 便携版免安装、无需另装 Node.js；“便携”指程序文件，任务数据仍写入当前 Windows 用户的数据目录。当前发布构建面向 Windows x64。
 
@@ -133,3 +164,9 @@ store.js    本地 JSON 存储
 ## License
 
 [MIT](LICENSE)
+
+## 项目关键词
+
+中文：时间管理、任务管理、待办清单、四象限法、艾森豪威尔矩阵、重要紧急矩阵、时间块、日程安排、桌面提醒、桌面置顶、未完成任务延续、学习计划、科研任务管理。
+
+English: time management, task management, to-do list, Eisenhower Matrix, priority management, time blocking, daily planner, task scheduling, desktop reminders, always-on-top, task carryover, local-first, offline productivity, Windows, Electron.

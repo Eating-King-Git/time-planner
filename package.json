@@ -1,7 +1,8 @@
 {
   "name": "time-planner",
   "version": "0.2.1",
-  "description": "本地优先的 Windows 桌面时间规划工具：中文任务输入、四象限分类、当日排程、桌面提醒与未完成任务延续。无需账号或大模型 API。",
+  "description": "Windows 桌面时间管理与待办工具：结合艾森豪威尔四象限、时间块安排和完成反馈，支持中文输入、当日排程、未来日程预览、置顶提醒及未完成任务延续。本地运行，无需账号或大模型 API。Eisenhower Matrix · Time Blocking · Daily Planner · Local-first.",
+  "keywords": ["time-management", "task-management", "todo-list", "eisenhower-matrix", "time-blocking", "daily-planner", "reminders", "always-on-top", "task-carryover", "local-first", "windows", "electron"],
   "main": "main.js",
   "scripts": {
     "start": "electron .",
