@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'">
+  <title>时间规划师</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header id="titlebar">
+    <span class="app-name">时间规划师</span>
+    <div class="win-controls">
+      <button id="btn-zoom-out" class="icon-btn" title="缩小界面">−</button>
+      <span id="zoom-label" class="zoom-label">100%</span>
+      <button id="btn-zoom-in" class="icon-btn" title="放大界面">＋</button>
+      <button id="btn-pin" class="icon-btn" title="置顶切换">📌</button>
+      <button id="btn-expand" class="icon-btn" title="展开/紧凑">⤢</button>
+      <button id="btn-minimize" class="icon-btn" title="最小化">—</button>
+      <button id="btn-quit" class="icon-btn" title="退出">×</button>
+    </div>
+  </header>
+
+  <!-- 紧凑模式 -->
+  <section id="compact-view">
+    <div class="quick-capture">
+      <input id="compact-input" type="text" maxlength="500" placeholder="快速添加：明天下午3点交报告，1小时">
+      <button id="btn-compact-add" class="primary">＋</button>
+    </div>
+    <div id="compact-stats" class="stats-row"></div>
+    <div id="overdue-confirm" class="overdue-panel" hidden></div>
+    <div class="now-strip">
+      <span class="status-dot"></span>
+      <div class="grow">
+        <div id="current-task" class="compact-title">—</div>
+        <div id="current-time" class="sub-text"></div>
+      </div>
+      <div class="next-inline"><span class="sub-text">下一项</span><br><span id="next-task">—</span> <span id="next-time" class="sub-text"></span></div>
+    </div>
+    <div class="tabbar compact-tabs">
+      <button id="tab-compact-today" class="active">今天</button>
+      <button id="tab-compact-upcoming">未来3天</button>
+      <button id="tab-compact-long">长期</button>
+    </div>
+    <div id="compact-list" class="dense-list"></div>
+    <div class="compact-actions">
+      <button id="btn-done" class="primary">完成</button>
+      <button id="btn-postpone">推迟</button>
+      <button id="btn-expand2">详细视图</button>
+    </div>
+  </section>
+
+  <!-- 完整模式 -->
+  <section id="full-view" hidden>
+    <div class="capture">
+      <input id="capture-input" type="text" maxlength="500" placeholder="用中文描述任务，如：明天下午3点前交报告，需要1小时">
+      <div class="structured">
+        <label>截止 <input id="f-deadline" type="datetime-local"></label>
+        <label>时长(分) <input id="f-duration" type="number" min="5" max="480" step="5"></label>
+        <label>影响
+          <select id="f-impact">
+            <option value="">未指定</option>
+            <option value="high">大</option>
+            <option value="medium">中</option>
+            <option value="low">小</option>
+          </select>
+        </label>
+        <label>范围
+          <select id="f-horizon"><option value="today">近期</option><option value="long">长期</option></select>
+        </label>
+        <label>固定开始 <input id="f-fixed-start" type="datetime-local"></label>
+        <label>固定结束 <input id="f-fixed-end" type="datetime-local"></label>
+      </div>
+      <div id="clarify-row" class="clarify" hidden></div>
+      <div id="preview-card" class="preview" hidden></div>
+      <div id="quadrant-preview" class="quadrant-preview"></div>
+      <div class="capture-actions">
+        <button id="btn-save" class="primary">保存任务</button>
+        <span id="save-hint" class="sub-text"></span>
+      </div>
+    </div>
+
+    <div id="warnings" class="warnings" hidden></div>
+
+    <div id="pending-panel" class="pending-panel" hidden>
+      <div class="label-row"><span class="label">需要你确认</span><span id="pending-count" class="count-badge"></span></div>
+      <div id="pending-list" class="dense-list"></div>
+    </div>
+
+    <div id="overdue-confirm-full" class="overdue-panel" hidden></div>
+
+    <div id="today-summary" class="today-summary"></div>
+
+    <div class="dashboard-grid">
+      <div class="list-panel">
+        <div class="label-row"><span class="label">今天 / 待安排</span><span id="today-count" class="count-badge"></span></div>
+        <div id="today-list" class="dense-list"></div>
+      </div>
+      <div class="list-panel">
+        <div class="label-row"><span class="label">长期 / 未来</span><span id="long-count" class="count-badge"></span></div>
+        <div id="long-list" class="dense-list"></div>
+      </div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="label-row">
+        <span class="label">今日时间线</span>
+        <button id="btn-replan">重新规划</button>
+      </div>
+      <div id="timeline" class="timeline"></div>
+    </div>
+
+    <details class="upcoming-wrap" open>
+      <summary>未来7天</summary>
+      <div id="upcoming-list" class="upcoming-list"></div>
+    </details>
+
+    <details class="matrix-wrap">
+      <summary>四象限详情</summary>
+      <div id="matrix" class="matrix"></div>
+    </details>
+
+    <div class="settings-row">
+      <label>安静时段 <input id="s-quiet-start" type="time"> 至 <input id="s-quiet-end" type="time"></label>
+    </div>
+  </section>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="../core/parse.js"></script>
+  <script src="../core/classify.js"></script>
+  <script src="../core/today.js"></script>
+  <script src="../core/confirm.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
